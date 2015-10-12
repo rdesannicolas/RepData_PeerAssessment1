@@ -35,7 +35,8 @@ The dataset is stored in a comma-separated-value (CSV) file and there are a tota
 &nbsp;
 
 We first here load the data after downloading it from the web link that has been provided (see the link above in this document).
-```{r, echo = TRUE}
+
+```r
 data <- read.csv("activity.csv", sep=",", header = TRUE, stringsAsFactors = FALSE, na.strings = "NA")
 ```
 So here we download the zip file and load the extracted file using `read.csv()`.
@@ -54,7 +55,8 @@ So here we download the zip file and load the extracted file using `read.csv()`.
 
 &nbsp;
 We are going tu use the `complete.cases`function to extract all the `NA`values from the dataset. Then, we calculate the sum of steps (total number) for each day by applying the `tapply`function with steps and date, calling the function `sum`.
-```{r, echo = TRUE}
+
+```r
 data_n <- data[complete.cases(data),]
 tot_step_day <- tapply(data_n$steps, data_n$date, sum, na.rm = TRUE)
 ```
@@ -65,9 +67,12 @@ tot_step_day <- tapply(data_n$steps, data_n$date, sum, na.rm = TRUE)
 
 &nbsp;
 We are now plotting the histogram that shows us the steps and their frequency.
-```{r, fig.width=4, fig.height=4, echo = TRUE}
+
+```r
 hist(tot_step_day, col="blue", xlab = "Number of steps", main = "Average number of steps per day")
 ```
+
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
 
 &nbsp;
 
@@ -78,15 +83,28 @@ hist(tot_step_day, col="blue", xlab = "Number of steps", main = "Average number 
 
 &nbsp;
 We now calculate the mean and median by simply applying the functions `mean`and `median`.
-```{r, echo = TRUE}
+
+```r
 mean_tot <- mean(tot_step_day)
 median_tot <- median(tot_step_day)
 ```
-```{r, echo = TRUE}
+
+```r
 mean_tot
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 median_tot
 ```
-So, as we can see above, the mean is `r formatC(mean_tot,format = "d")` and the median is `r median_tot`.
+
+```
+## [1] 10765
+```
+So, as we can see above, the mean is 10766 and the median is 10765.
 
 &nbsp;
 &nbsp;
@@ -100,14 +118,18 @@ So, as we can see above, the mean is `r formatC(mean_tot,format = "d")` and the 
 
 &nbsp;
 Here, we are building the time series the same way that we did before, using `tapply`, but this time with the variables `steps`and ìnterval`and a call to the `mean`function.
-```{r, echo = TRUE}
+
+```r
 data_n <- data[complete.cases(data),]
 time_series <- tapply(data_n$steps, data_n$interval, mean, na.rm = TRUE)
 ```
 We plot the time series by assigning the names of the time series (the 5-minute intervals) to the x-axis, and the values (averaged steps) to the y-axis.
-```{r, fig.width=4, fig.height=4, echo = TRUE}
+
+```r
 plot(names(time_series), time_series, type = "l", xlab = "Interval (every 5 min)", ylab = "Number of steps averaged accross all days", main = "Average daily activity", col = "blue")
 ```
+
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) 
 
 &nbsp;
 
@@ -115,11 +137,16 @@ plot(names(time_series), time_series, type = "l", xlab = "Interval (every 5 min)
 
 &nbsp;
 To find the maximum value, we use the `which.max`function that gives us the maximum value for the time series. And then, we apply this index to the names of the time series to get the corresponding 5-minute interval.
-```{r, echo = TRUE}
+
+```r
 a <- which.max(time_series)
 names(a)
 ```
-The 5-minute interval that contains the maximum number of steps is `r names(a)`.
+
+```
+## [1] "835"
+```
+The 5-minute interval that contains the maximum number of steps is 835.
 
 &nbsp;
 &nbsp;
@@ -135,11 +162,16 @@ The 5-minute interval that contains the maximum number of steps is `r names(a)`.
 
 &nbsp;
 We use the `complete.cases`function to extract the `NA`values from the dataset and so use it to calculate the number of rows concerned.
-```{r, echo = TRUE}
+
+```r
 num_na <- sum(!(complete.cases(data)))
 num_na
 ```
-The total number of missing values in the dataset is `r num_na`.
+
+```
+## [1] 2304
+```
+The total number of missing values in the dataset is 2304.
 
 &nbsp;
 
@@ -150,7 +182,8 @@ and
 &nbsp;
 
 Here we are going to assign to each `NA` value the average number of steps calculated through all the other steps values for the same interval for all days. We are creating the new dataset at the same time within the for-loop call.
-```{r, echo = TRUE}
+
+```r
 data_new <- data
 for (i in 1:nrow(data_new)){
     if (is.na(data_new$steps[i])){
@@ -165,27 +198,53 @@ for (i in 1:nrow(data_new)){
 
 &nbsp;
 We use the same method as above in this document to plot the histogram.
-```{r, fig.width=4, fig.height=4, echo = TRUE}
+
+```r
 tot_step_day2 <- tapply(data_new$steps, data_new$date, sum)
 hist(tot_step_day2, col = "green",xlab = "Number of steps", main = "Average number of steps per day")
 ```
+
+![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png) 
 And now we calculate the mean and the median of this set.
-```{r, echo = TRUE}
+
+```r
 mean_tot2 <- mean(tot_step_day2)
 median_tot2 <- median(tot_step_day2)
 ```
 We now print these values.
-```{r, echo = TRUE}
+
+```r
 mean_tot2
 ```
-```{r, echo = TRUE}
+
+```
+## [1] 10766.19
+```
+
+```r
 median_tot2
+```
+
+```
+## [1] 10766.19
 ```
 We can see that these values are very close to the estimates from the first part of the assignment. This is due to the fact that we have replaced the `NA`values with the mean of the set for the other days.
 Let's calculate the difference to see that these values are very close.
-```{r, echo = TRUE}
+
+```r
 mean_tot2 - mean_tot
+```
+
+```
+## [1] 0
+```
+
+```r
 median_tot2 - median_tot
+```
+
+```
+## [1] 1.188679
 ```
 
 &nbsp;
@@ -203,7 +262,8 @@ median_tot2 - median_tot
 &nbsp;
 
 Here we create the new factor variable by checking if the weekday of the date value is a Saturady/Sunday or another weekday. We assign the test value (`weekday`/`weekend`) to the variable `w` and then we create this variable inside the dataset and set it to factor.
-```{r, echo = TRUE}
+
+```r
 w <- weekdays(strptime(data_new$date, format = "%Y-%m-%d"))
 for (i in 1:length(w)){
     if (w[i] == "Saturday" | w[i] == "Sunday"){
@@ -223,10 +283,13 @@ data_new$w <- w
 
 &nbsp;
 To be able to make the plot, we use the function àggregate`to create a new dataset in which we have the steps, the intervals, and the factor variable weekday/weekend. It enables to make the plot with the condition on the `w`variable (weekday/weekend).
-```{r, fig.width=7, fig.height=4, echo = TRUE}
+
+```r
 data_fin <- aggregate(steps ~ interval + w, data = data_new, mean)
 
 library(lattice)
 
 xyplot(steps ~ interval | w, data = data_fin, type = "l", layout = c(1, 2), xlab = "Interval", ylab = "Number of steps")
 ```
+
+![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png) 
