@@ -69,7 +69,7 @@ tot_step_day <- tapply(data_n$steps, data_n$date, sum, na.rm = TRUE)
 We are now plotting the histogram that shows us the steps and their frequency.
 
 ```r
-hist(tot_step_day, col="blue", xlab = "Number of steps", main = "Average number of steps per day")
+hist(tot_step_day, col="blue", xlab = "Steps per day", main = "Number of steps per day")
 ```
 
 ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
@@ -201,10 +201,14 @@ We use the same method as above in this document to plot the histogram.
 
 ```r
 tot_step_day2 <- tapply(data_new$steps, data_new$date, sum)
-hist(tot_step_day2, col = "green",xlab = "Number of steps", main = "Average number of steps per day")
+hist(tot_step_day2, col = "green",xlab = "Steps per day", main = "Average number of steps per day\n including missing values")
 ```
 
 ![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png) 
+
+&nbsp;
+&nbsp;
+
 And now we calculate the mean and the median of this set.
 
 ```r
@@ -282,7 +286,7 @@ data_new$w <- w
 **2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.**
 
 &nbsp;
-To be able to make the plot, we use the function àggregate`to create a new dataset in which we have the steps, the intervals, and the factor variable weekday/weekend. It enables to make the plot with the condition on the `w`variable (weekday/weekend).
+To be able to make the plot, we use the function aggregate to create a new dataset in which we have the steps, the intervals, and the factor variable weekday/weekend. It enables to make the plot with the condition on the `w` variable (weekday/weekend).
 
 ```r
 data_fin <- aggregate(steps ~ interval + w, data = data_new, mean)
