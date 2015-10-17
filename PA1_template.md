@@ -69,7 +69,7 @@ tot_step_day <- tapply(data_n$steps, data_n$date, sum, na.rm = TRUE)
 We are now plotting the histogram that shows us the steps and their frequency.
 
 ```r
-hist(tot_step_day, col="blue", xlab = "Steps per day", main = "Number of steps per day")
+hist(tot_step_day, col="blue", xlab = "Steps per Day", main = "Number of Steps per Day")
 ```
 
 ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
@@ -126,7 +126,7 @@ time_series <- tapply(data_n$steps, data_n$interval, mean, na.rm = TRUE)
 We plot the time series by assigning the names of the time series (the 5-minute intervals) to the x-axis, and the values (averaged steps) to the y-axis.
 
 ```r
-plot(names(time_series), time_series, type = "l", xlab = "Interval (every 5 min)", ylab = "Number of steps averaged accross all days", main = "Average daily activity", col = "blue")
+plot(names(time_series), time_series, type = "l", xlab = "Interval", ylab = "Number of Steps Averaged accross all Days", main = "Average Daily Activity", col = "blue")
 ```
 
 ![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) 
@@ -201,7 +201,7 @@ We use the same method as above in this document to plot the histogram.
 
 ```r
 tot_step_day2 <- tapply(data_new$steps, data_new$date, sum)
-hist(tot_step_day2, col = "green",xlab = "Steps per day", main = "Average number of steps per day\n including missing values")
+hist(tot_step_day2, col = "green",xlab = "Steps per Day", main = "Average number of Steps per Day\n including Missing Values")
 ```
 
 ![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png) 
@@ -293,7 +293,7 @@ data_fin <- aggregate(steps ~ interval + w, data = data_new, mean)
 
 library(lattice)
 
-xyplot(steps ~ interval | w, data = data_fin, type = "l", layout = c(1, 2), xlab = "Interval", ylab = "Number of steps")
+xyplot(steps ~ interval | w, data = data_fin, type = "l", layout = c(1, 2), xlab = "Interval", ylab = "Number of Steps")
 ```
 
 ![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png) 
